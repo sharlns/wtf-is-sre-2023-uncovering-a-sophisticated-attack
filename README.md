@@ -143,6 +143,11 @@ Pick up the `shell` execution:
 
 Execute `nsenter` to enter into the 5 host namespaces (mount, user, network, pid, ipc) from the privileged pod and run bash as a host:
 ```bash
+nsenter -t 1 -m -u -n -i -p bash
+```
+
+Observe the events:
+```bash
 🚀 process default/privileged-the-pod /usr/bin/nsenter -t 1 -m -u -n -i -p bash 🛑 CAP_SYS_ADMIN
 🔧 setns   default/privileged-the-pod /usr/bin/nsenter ipc          🛑 CAP_SYS_ADMIN
 🔧 setns   default/privileged-the-pod /usr/bin/nsenter uts          🛑 CAP_SYS_ADMIN
@@ -230,20 +235,20 @@ service/recruiter created
 Wait until the services are running:
 ```bash
 kubectl get pods -n tenant-jobs
-NAME                            READY   STATUS    RESTARTS      AGE
-coreapi-9b86fc969-r9dct         1/1     Running   1 (79s ago)   105s
-crawler-6f5c75d8fd-9hcwt        1/1     Running   0             104s
-elasticsearch-ddcb9d785-tlghd   1/1     Running   0             105s
-jobposting-6f686d686-752xm      1/1     Running   0             106s
-kafka-0                         1/1     Running   0             104s
-loader-844884db59-hvv8t         1/1     Running   0             104s
-recruiter-557755c86c-xf2mv      1/1     Running   0             106s
-zookeeper-7c65f9f8d9-6567n      1/1     Running   0             104s
+NAME                            READY   STATUS    RESTARTS     AGE
+coreapi-9b86fc969-xk46s         1/1     Running   2 (4d ago)   4d
+crawler-6f5c75d8fd-gq2h8        1/1     Running   0            4d
+elasticsearch-ddcb9d785-s7nkl   1/1     Running   0            4d
+jobposting-76dff7dcfd-d98gb     1/1     Running   0            4d
+kafka-0                         1/1     Running   0            4d
+loader-844884db59-qjwsv         1/1     Running   0            4d
+recruiter-557755c86c-lg64f      1/1     Running   0            4d
+zookeeper-7c65f9f8d9-2ldf5      1/1     Running   0            4d
 ```
 
-`kubectl exec` into the coreapi pod:
+`kubectl exec` into the jobposting pod:
 ```bash
-kubectl exec -it -n tenant-jobs coreapi-9b86fc969-hbs5l -- /bin/sh
+kubectl exec -it -n tenant-jobs jobposting-76dff7dcfd-d98gb -- /bin/sh
 /opt/app #
 ```
 
